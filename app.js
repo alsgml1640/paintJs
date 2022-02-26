@@ -17,8 +17,7 @@ let filling = false;
 canvas.width = CANVAS_SIZE;
 canvas.height = CANVAS_SIZE;
 
-ctx.fillStyle = "white";
-ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
+handleClearBtnClick();
 
 ctx.fillStyle = "black";
 ctx.strokeStyle = "black";
@@ -69,19 +68,21 @@ function handleCanvasClick() {
 }
 
 function handleFillBtnClick() {
-  const btnName = fillBtn.innerHTML;
-  if (btnName === "FILL") {
-    fillBtn.innerHTML = "PAINT";
-    filling = true;
-  } else {
+  if (filling === true) {
     fillBtn.innerHTML = "FILL";
     filling = false;
+  } else {
+    fillBtn.innerHTML = "PAINT";
+    filling = true;
   }
 }
 
 function handleClearBtnClick() {
   ctx.fillStyle = "white";
+  ctx.strokeStyle = "white";
   ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
+  ctx.fillStyle = "black";
+  ctx.strokeStyle = "black";
 }
 function handleSaveClick() {
   const link = document.createElement("a");
@@ -90,12 +91,15 @@ function handleSaveClick() {
   link.click();
 }
 
+// 버튼 이벤트 정리
 clearBtn.addEventListener("click", handleClearBtnClick);
 fillBtn.addEventListener("click", handleFillBtnClick);
 saveBtn.addEventListener("click", handleSaveClick);
 
+// range 이벤트 정리
 range.addEventListener("input", handleRangeSize);
 
+// 캔버스 이벤트 정리
 canvas.addEventListener("mousemove", onMouseMove);
 canvas.addEventListener("mousedown", startPainting);
 canvas.addEventListener("mouseup", stopPainting);
